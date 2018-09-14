@@ -14,6 +14,7 @@ import model.DataIdentifier;
 import model.data.AverageData;
 import model.data.MindData;
 import model.data.PredictionData;
+import org.apache.log4j.Logger;
 import utils.CalcUtils;
 
 import java.util.ArrayList;
@@ -35,6 +36,7 @@ public class Santini {
 	private BinanceApiClientFactory factory = null;
 	private BinanceApiRestClient client = null;
 
+	final static Logger logger = Logger.getLogger(Santini.class);
 
 	public Santini(String apiKey, String secret) {
 		mindData = new MindData();
@@ -44,7 +46,7 @@ public class Santini {
 	}
 
 	public static void playSweetWater() {
-		System.out.println("\nLOADING SYSTEM ... \n");
+		logger.info("LOADING SYSTEM ... ");
 		new CalcUtils().sleeper(CalcUtils.SLEEP_NUM);
 		System.out.println(" .----------------. .----------------. .----------------. .----------------. .----------------. ");
 		new CalcUtils().sleeper(CalcUtils.SLEEP_NUM);
@@ -75,7 +77,6 @@ public class Santini {
 			for (CandlestickInterval interval : intervalList) {
 				gatherIntervalData(mindData, interval, ticker);
 				new CalcUtils().sleeper(500);
-				//System.out.println(ticker + " data fetched for interval: " + interval.getIntervalId() + " ...");
 			}
 		}
 	}
@@ -139,7 +140,8 @@ public class Santini {
 			}
 		}
 		Double lastPriceFloored = Math.round(Double.valueOf(lastPrice.getLastPrice()) * 100.0) / 100.0;
-		System.out.println("Current: $" + lastPriceFloored + " Sell: $" + sellPrice + " Buy: $" + buyBack);
+		//System.out.println("Current: $" + lastPriceFloored + " Sell: $" + sellPrice + " Buy: $" + buyBack);
+		logger.info("Current: $" + lastPriceFloored + " Sell: $" + sellPrice + " Buy: $" + buyBack);
 		boolean trade = true;
 		List<Order> openOrders = client.getOpenOrders(new OrderRequest("BTCUSDT"));
 		if (openOrders.size() > 0) {
