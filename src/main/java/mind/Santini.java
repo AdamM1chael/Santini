@@ -28,7 +28,7 @@ import static com.binance.api.client.domain.account.NewOrder.limitSell;
 public class Santini {
 
     final static Logger logger = Logger.getLogger(Santini.class);
-    private static Double percentageRatio = 1.00167;
+    private static Double percentageRatio = 1.00168;
     private static int MAX_TRADES_PER_24HOURS = 10;
     private static CandlestickInterval[] intervalList = {
             CandlestickInterval.ONE_MINUTE};
