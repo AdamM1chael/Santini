@@ -147,6 +147,7 @@ public class Santini {
                 Twitter twitter = TwitterFactory.getSingleton();
                 try {
                     Status status = twitter.updateStatus(message);
+                    logger.trace("Sent tweet to @Santini__Dolores");
                 } catch (TwitterException e) {
                     logger.error("ERROR SENDING TWEET: Reason: {}", e);
                 }
