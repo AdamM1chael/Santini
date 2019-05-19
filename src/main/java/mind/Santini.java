@@ -236,9 +236,9 @@ public class Santini {
 			//WE SHOULD SELL AND BUY!
 			String message = "Deciding to sell! Current: $" + lastPriceFloored + " Target: $" + target + " Buy back: $" + buyBack;
 			logger.info(message);
-			//sendTweet(message);
+			sendTweet(message);
 			//My bad I was sending a tweet
-			//performSellAndBuyBack(lastPriceFloored, buyBack);
+			performSellAndBuyBack(lastPriceFloored, buyBack);
 		}
 	}
 
