@@ -29,7 +29,7 @@ import java.util.List;
 import static com.binance.api.client.domain.account.NewOrder.*;
 
 public class Santini {
-	private final static boolean DEVELOPING = true;
+	private final static boolean DEVELOPING = false;
 	private final static Logger logger = Logger.getLogger(Santini.class);
 	private static CandlestickInterval[] intervalList = {
 			CandlestickInterval.ONE_MINUTE, CandlestickInterval.THREE_MINUTES,
