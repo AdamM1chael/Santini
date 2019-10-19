@@ -17,7 +17,6 @@ import com.elseifn.santini.model.data.MindData;
 import com.elseifn.santini.model.data.PredictionEngine;
 import com.elseifn.santini.utils.CalcUtils;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
@@ -32,7 +31,7 @@ import static com.binance.api.client.domain.account.NewOrder.*;
 
 @Service
 public class Santini {
-  private static final boolean DEVELOPING = false;
+  private static final boolean DEVELOPING = true;
   private static final Logger logger = Logger.getLogger(Santini.class);
   private static CandlestickInterval[] intervalList = {
           CandlestickInterval.ONE_MINUTE, CandlestickInterval.THREE_MINUTES,
@@ -47,7 +46,6 @@ public class Santini {
   private String accessToken;
   private String accessTokenSecret;
 
-  @Autowired
   public Santini() {
   }
 

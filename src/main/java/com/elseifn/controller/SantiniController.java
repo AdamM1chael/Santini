@@ -10,12 +10,20 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class SantiniController {
+  private final Santini santini;
+
   @Autowired
-  private Santini dolores;
+  public SantiniController(Santini santini) {
+    this.santini = santini;
+  }
 
   @RequestMapping(path = "/totalBalance", method = RequestMethod.GET)
   public ResponseEntity getTotalBalance() {
+    return new ResponseEntity(santini.getTotalBalance(), HttpStatus.OK);
+  }
 
-    return new ResponseEntity(dolores.getTotalBalance(), HttpStatus.OK);
+  @RequestMapping(path = "/shutdown", method = RequestMethod.GET)
+  public void shutdown() {
+    System.exit(-1);
   }
 }

@@ -19,7 +19,6 @@ public class SantiniApplication {
       logger.error("Not enough arguments have been given");
       System.exit(-1);
     }
-    logger.info("Starting Santini trading...");
     for (;;) {
       Santini dolores = context.getBean(Santini.class);
       dolores.setBinanceCreds(args[0], args[1]);
