@@ -19,11 +19,17 @@ public class SantiniController {
 
   @RequestMapping(path = "/totalBalance", method = RequestMethod.GET)
   public ResponseEntity getTotalBalance() {
-    return new ResponseEntity(santini.getTotalBalance(), HttpStatus.OK);
+    return new ResponseEntity<>(santini.getTotalBalance(), HttpStatus.OK);
   }
 
   @RequestMapping(path = "/shutdown", method = RequestMethod.GET)
   public void shutdown() {
     System.exit(-1);
+  }
+
+  @RequestMapping(path = "/state", method = RequestMethod.GET)
+  public ResponseEntity getState() {
+    String response = "Have you ever seen anything so full of splendor?";
+    return new ResponseEntity<>(response, HttpStatus.OK);
   }
 }
