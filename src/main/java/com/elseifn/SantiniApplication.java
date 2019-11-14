@@ -18,10 +18,10 @@ public class SantiniApplication {
       logger.error("Not enough arguments have been given");
       System.exit(-1);
     }
+    Santini dolores = context.getBean(Santini.class);
+    dolores.setBinanceCreds(args[0], args[1]);
+    dolores.setTwitterCreds(args[2], args[3], args[4], args[5]);
     for (; ; ) {
-      Santini dolores = context.getBean(Santini.class);
-      dolores.setBinanceCreds(args[0], args[1]);
-      dolores.setTwitterCreds(args[2], args[3], args[4], args[5]);
       dolores.gatherMindData();
       dolores.predictAndTrade();
       dolores.printBalances();

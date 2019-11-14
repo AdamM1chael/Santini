@@ -1,5 +1,6 @@
 package com.elseifn.controller;
 
+import com.google.gson.Gson;
 import com.elseifn.santini.mind.Santini;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ public class SantiniController {
   private static final String PATH_BALANCE = "/totalBalance";
   private static final String PATH_SHUTDOWN = "/shutdown";
   private static final String PATH_STATE = "/state";
+  private static final String PATH_OPEN_ORDERS = "/getOpenOrders";
   private final Santini santini;
 
   @Autowired
@@ -40,5 +42,11 @@ public class SantiniController {
     logger.trace(PATH_STATE + " endpoint hit");
     String response = "Have you ever seen anything so full of splendor?";
     return new ResponseEntity<>(response, HttpStatus.OK);
+  }
+
+  @RequestMapping(path = PATH_OPEN_ORDERS, method = RequestMethod.GET)
+  public ResponseEntity getOpenOrders() {
+    logger.trace(PATH_OPEN_ORDERS + " endpoint hit");
+    return new ResponseEntity<>(new Gson().toJson(santini.getOpenOrders()), HttpStatus.OK);
   }
 }
