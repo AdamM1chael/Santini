@@ -31,7 +31,7 @@ import static com.binance.api.client.domain.account.NewOrder.*;
 
 @Service
 public class Santini {
-  private static final boolean DEVELOPING = true;
+  private static final boolean DEVELOPING = false;
   private static final Logger logger = Logger.getLogger(Santini.class);
   private static CandlestickInterval[] intervalList = {
     CandlestickInterval.ONE_MINUTE, CandlestickInterval.THREE_MINUTES,
