@@ -60,7 +60,13 @@ public class SantiniController {
   @GetMapping(path = PATH_STATUS)
   public ResponseEntity getState() {
     logger.trace(PATH_STATUS + RESPONSE_SUFFIX);
-    String response = "Have you ever seen anything so full of splendor?";
+    String response = "=====  >>>>>  SANTINI  <<<<<  =====<br>";
+    if (Santini.DEVELOPMENT_MODE) response += "<br>### DEVELOPMENT MODE ###<br>";
+    response += "<br>Status  :::  " + santini.getCurrentStateString();
+    response += "<br><br>--- Prices ---";
+    response += "<br>Current price: $" + santini.getCurrentPrice();
+    response += "<br>Current target: $" + santini.getCurrentTargetPrice();
+    if (santini.currentState) response += "<br>Buy back price: $" + santini.getCurrentBuyBackPrice();
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
