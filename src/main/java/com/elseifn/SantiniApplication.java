@@ -13,7 +13,7 @@ public class SantiniApplication {
 
   public static void main(String[] args) {
     ConfigurableApplicationContext context = SpringApplication.run(SantiniApplication.class, args);
-    logger.info("Starting SANTINI (v6.2.7) ...");
+    logger.info("Starting SANTINI (v6.3.0) ...");
     if (args.length < 6) {
       logger.error("Not enough arguments have been given");
       System.exit(-1);
