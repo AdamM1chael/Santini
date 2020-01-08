@@ -33,13 +33,13 @@ public class SantiniController {
   @GetMapping(path = PATH_BALANCE)
   public ResponseEntity getTotalBTC() {
     logger.trace(PATH_BALANCE + RESPONSE_SUFFIX);
-    return new ResponseEntity<>(santini.getTotalBalance(), HttpStatus.OK);
+    return new ResponseEntity<>(santini.getCurrentBalance(), HttpStatus.OK);
   }
 
   @GetMapping(path = PATH_PROFIT)
   public ResponseEntity getTotalProfit() {
     logger.trace(PATH_PROFIT + RESPONSE_SUFFIX);
-    return new ResponseEntity<>(santini.getTotalProfit(), HttpStatus.OK);
+    return new ResponseEntity<>(santini.getCurrentProfit(), HttpStatus.OK);
   }
 
   @GetMapping(path = PATH_SHUTDOWN, params = {"pass"})
@@ -60,13 +60,19 @@ public class SantiniController {
   @GetMapping(path = PATH_STATUS)
   public ResponseEntity getState() {
     logger.trace(PATH_STATUS + RESPONSE_SUFFIX);
-    String response = "=====  >>>>>  SANTINI  <<<<<  =====<br>";
+    String response = "=====  >>>>>  SANTINI (v" + santini.getVersion() + ") <<<<<  =====<br>";
     if (Santini.DEVELOPMENT_MODE) response += "<br>### DEVELOPMENT MODE ###<br>";
     response += "<br>Status  :::  " + santini.getCurrentStateString();
-    response += "<br><br>--- Prices ---";
-    response += "<br>Current price: $" + santini.getCurrentPrice();
-    response += "<br>Current target: $" + santini.getCurrentTargetPrice();
-    if (santini.currentState) response += "<br>Buy back price: $" + santini.getCurrentBuyBackPrice();
+    response += "<br><br>--- Engine data ---";
+    response += "<br>BTC Price: $" + santini.getCurrentPrice();
+    response += "<br>Target: $" + santini.getCurrentTargetPrice();
+    response += "<br>Buy back: $" + santini.getCurrentBuyBackPrice();
+    response += "<br><br>--- Status report ---";
+    if (!santini.currentState) response += "<br>There is an open buy back order at: $" + santini.getOpenBuyBackPrice()
+            + " for " + santini.getOpenBuyBackAmt() + " BTC";
+    response += "<br>Initial investment: " + santini.getInitialInvestment() + " BTC";
+    response += "<br>Current portfolio value: " + santini.getCurrentBalance() + " BTC";
+    response += "<br>Current profit: " + santini.getCurrentProfit() + "%";
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
