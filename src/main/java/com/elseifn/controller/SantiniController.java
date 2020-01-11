@@ -42,13 +42,13 @@ public class SantiniController {
     return new ResponseEntity<>(santini.getCurrentProfit(), HttpStatus.OK);
   }
 
-  @GetMapping(path = PATH_SHUTDOWN, params = {"pass"})
+  @GetMapping(
+      path = PATH_SHUTDOWN,
+      params = {"pass"})
   public void seppuku(@RequestParam("pass") String pass, HttpServletRequest request) {
     logger.trace(PATH_SHUTDOWN + RESPONSE_SUFFIX);
-    //Verify the password provided...
-    String sha256hex = Hashing.sha256()
-            .hashString(pass, StandardCharsets.UTF_8)
-            .toString();
+    // Verify the password provided...
+    String sha256hex = Hashing.sha256().hashString(pass, StandardCharsets.UTF_8).toString();
     if (sha256hex.equals("bc159b2d00a17af10d15f85c0fc3050626a9de62ddada278c086b5a53c883464")) {
       logger.info("Shutdown received from IP-address: " + request.getRemoteUser());
       System.exit(-1);
@@ -68,12 +68,18 @@ public class SantiniController {
     response += "<br>Target: $" + santini.getCurrentTargetPrice();
     response += "<br>Buy back: $" + santini.getCurrentBuyBackPrice();
     response += "<br><br>--- Status report ---";
-    if (!santini.currentState) response += "<br>There is an open buy back order at: $" + santini.getOpenBuyBackPrice()
-            + " for " + santini.getOpenBuyBackAmt() + " BTC";
+    if (!santini.currentState)
+      response +=
+          "<br>There is an open buy back order at: $"
+              + santini.getOpenBuyBackPrice()
+              + " for "
+              + santini.getOpenBuyBackAmt()
+              + " BTC";
     response += "<br>Initial investment: " + santini.getInitialInvestment() + " BTC";
     response += "<br>Current portfolio value: " + santini.getCurrentBalance() + " BTC";
     response += "<br>Current profit: " + santini.getCurrentProfit() + "%";
-    return new ResponseEntity<>(response, HttpStatus.OK);
+    return new ResponseEntity<>(
+        "<font face=\"courier new\">" + response + "</font>", HttpStatus.OK);
   }
 
   @GetMapping(path = PATH_OPEN_ORDERS)
