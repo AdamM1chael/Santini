@@ -5,7 +5,7 @@
 
     <groupId>com.elseifn</groupId>
     <artifactId>santini</artifactId>
-    <version>6.3.5</version>
+    <version>6.3.6</version>
     <packaging>jar</packaging>
 
     <name>santini</name>
