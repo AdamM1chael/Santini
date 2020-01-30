@@ -91,7 +91,7 @@ public class SantiniController {
             + "</head>\n"
             + "<title>Santini</title>\n"
             + "<body bgcolor=\"#000000\">\n"
-            + "<font face=\"Courier\" size=\"3\" color=\"#2fff00\">\n"
+            + "<font face=\"Courier\" size=\"3\" color=\"#F7931A\">\n"
             + response
             + "</font> \n"
             + "</body>\n"
