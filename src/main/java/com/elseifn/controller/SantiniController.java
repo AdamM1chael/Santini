@@ -68,6 +68,7 @@ public class SantiniController {
     response += "<br>Target: $" + santini.getCurrentTargetPrice();
     response += "<br>Buy back: $" + santini.getCurrentBuyBackPrice();
     response += "<br><br>--- Status report ---";
+    response += "<br>Sell confidence: " + santini.getCurrentSellConfidence() + "%";
     if (!santini.currentState)
       response +=
           "<br>There is an open buy back order at: $"
@@ -76,8 +77,8 @@ public class SantiniController {
               + santini.getOpenBuyBackAmt()
               + " BTC";
     response += "<br>Initial investment: " + santini.getInitialInvestment() + " BTC";
-    response += "<br>Current portfolio value: " + santini.getCurrentBalance() + " BTC";
-    response += "<br>Current profit: " + santini.getCurrentProfit() + "%";
+    response += "<br>Portfolio value: " + santini.getCurrentBalance() + " BTC";
+    response += "<br>Profit: " + santini.getCurrentProfit() + "%";
     return new ResponseEntity<>(
         "<html>\n"
             + "<head>\n"
