@@ -79,7 +79,7 @@ public class SantiniController {
     response += "<br>Initial investment: " + santini.getInitialInvestment() + " BTC";
     response += "<br>Portfolio value: " + santini.getCurrentBalance() + " BTC";
     response += "<br>Profit: " + santini.getCurrentProfit() + "%";
-    response += "<br><br>Donate:<br>14Xqn75eLQVZEgjFgrQzF8C2PxNDf894yj";
+    response += "<br><br>--- Donate ---<br>14Xqn75eLQVZEgjFgrQzF8C2PxNDf894yj";
     return new ResponseEntity<>(
         "<html>\n"
             + "<head>\n"
