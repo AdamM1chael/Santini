@@ -43,8 +43,8 @@ public class SantiniController {
   }
 
   @GetMapping(
-          path = PATH_SHUTDOWN,
-          params = {"pass"})
+      path = PATH_SHUTDOWN,
+      params = {"pass"})
   public void seppuku(@RequestParam("pass") String pass, HttpServletRequest request) {
     logger.trace(PATH_SHUTDOWN + RESPONSE_SUFFIX);
     // Verify the password provided...
@@ -67,40 +67,47 @@ public class SantiniController {
     response += "<br>BTC Price: $" + santini.getCurrentPrice();
     response += "<br>Target: $" + santini.getCurrentTargetPrice();
     response += "<br>Buy back: $" + santini.getCurrentBuyBackPrice();
-    response += "<br><br>--- Status report ---";
     response += "<br>Sell confidence: " + santini.getCurrentSellConfidence() + "%";
-    if (!santini.currentState)
-      response +=
-              "<br>There is an open buy back order at: $"
-                      + santini.getOpenBuyBackPrice()
-                      + " for "
-                      + santini.getOpenBuyBackAmt()
-                      + " BTC";
+    response += "<br><br>--- Status report ---";
     response += "<br>Initial investment: " + santini.getInitialInvestment() + " BTC";
     response += "<br>Portfolio value: " + santini.getCurrentBalance() + " BTC";
     response += "<br>Profit: " + santini.getCurrentProfit() + "%";
+    if (!santini.currentState) {
+      Double diff = santini.getCurrentPrice() - santini.getOpenBuyBackPrice();
+      diff = Math.round(diff * 1000.0) / 1000.0;
+      response += "<br><br>--- Open buy back ---";
+      response +=
+          "<br>Amount: " + santini.getOpenBuyBackAmt() + " BTC @ $" + santini.getOpenBuyBackPrice();
+      response +=
+          "<br>Difference: $"
+              + diff
+              + " ("
+              + santini.getOpenBuyBackPercentage()
+              + "%)";
+    }
     response += "<br><br>--- Donate ---<br>";
-    response += "<a href=\"https://www.blockchain.com/btc/address/" +
-            "14Xqn75eLQVZEgjFgrQzF8C2PxNDf894yj\">14Xqn75eLQVZEgjFgrQzF8C2PxNDf894yj</a>";
+    response +=
+        "<a href=\"https://www.blockchain.com/btc/address/"
+            + "14Xqn75eLQVZEgjFgrQzF8C2PxNDf894yj\">14Xqn75eLQVZEgjFgrQzF8C2PxNDf894yj</a>";
     return new ResponseEntity<>(
-            "<html>\n"
-                    + "<head>\n"
-                    + "<link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/apple-touch-icon.png\">\n"
-                    + "<link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/favicon-32x32.png\">\n"
-                    + "<link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"/favicon-16x16.png\">\n"
-                    + "<link rel=\"manifest\" href=\"/site.webmanifest\">\n"
-                    + "<link rel=\"mask-icon\" href=\"/safari-pinned-tab.svg\" color=\"#5bbad5\">\n"
-                    + "<meta name=\"msapplication-TileColor\" content=\"#da532c\">\n"
-                    + "<meta name=\"theme-color\" content=\"#ffffff\">\n"
-                    + "</head>\n"
-                    + "<title>Santini</title>\n"
-                    + "<body bgcolor=\"#000000\">\n"
-                    + "<font face=\"Courier\" size=\"3\" color=\"#F7931A\">\n"
-                    + response
-                    + "</font> \n"
-                    + "</body>\n"
-                    + "</html> ",
-            HttpStatus.OK);
+        "<html>\n"
+            + "<head>\n"
+            + "<link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"/apple-touch-icon.png\">\n"
+            + "<link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"/favicon-32x32.png\">\n"
+            + "<link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"/favicon-16x16.png\">\n"
+            + "<link rel=\"manifest\" href=\"/site.webmanifest\">\n"
+            + "<link rel=\"mask-icon\" href=\"/safari-pinned-tab.svg\" color=\"#5bbad5\">\n"
+            + "<meta name=\"msapplication-TileColor\" content=\"#da532c\">\n"
+            + "<meta name=\"theme-color\" content=\"#ffffff\">\n"
+            + "</head>\n"
+            + "<title>Santini</title>\n"
+            + "<body bgcolor=\"#000000\">\n"
+            + "<font face=\"Courier\" size=\"3\" color=\"#F7931A\">\n"
+            + response
+            + "</font> \n"
+            + "</body>\n"
+            + "</html> ",
+        HttpStatus.OK);
   }
 
   @GetMapping(path = PATH_OPEN_ORDERS)
