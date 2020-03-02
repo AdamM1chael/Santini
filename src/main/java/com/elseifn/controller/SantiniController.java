@@ -61,17 +61,21 @@ public class SantiniController {
   public ResponseEntity getState() {
     logger.trace(PATH_STATUS + RESPONSE_SUFFIX);
     String response = "=====  >>>>>  SANTINI (v" + santini.getVersion() + ") <<<<<  =====<br>";
-    if (Santini.DEVELOPMENT_MODE) response += "<br>### DEVELOPMENT MODE ###<br>";
-    response += "<br>Status  :::  " + santini.getCurrentStateString();
-    response += "<br><br>--- Engine data ---";
+    if (Santini.DEVELOPMENT_MODE) response += "<br>### DEVELOPMENT MODE ###";
+    response += "<br>--- Status report ---";
+    response += "<br>Status: " + santini.getCurrentStateString();
+    response += "<br>Profit: " + santini.getCurrentProfit() + "%";
+    response += "<br>Portfolio value: " + santini.getCurrentBalance() + " BTC";
+    response += "<br>Initial investment: " + santini.getInitialInvestment() + " BTC";
+    response += "<br>Sell confidence: " + santini.getCurrentSellConfidence() + "%";
+    response += "<br><br>--- Prices ---";
     response += "<br>BTC Price: $" + santini.getCurrentPrice();
     response += "<br>Target: $" + santini.getCurrentTargetPrice();
     response += "<br>Buy back: $" + santini.getCurrentBuyBackPrice();
-    response += "<br>Sell confidence: " + santini.getCurrentSellConfidence() + "%";
-    response += "<br><br>--- Status report ---";
-    response += "<br>Initial investment: " + santini.getInitialInvestment() + " BTC";
-    response += "<br>Portfolio value: " + santini.getCurrentBalance() + " BTC";
-    response += "<br>Profit: " + santini.getCurrentProfit() + "%";
+    response += "<br><br>--- Links ---";
+    response += "<br><a href=\"https://github.com/elseifn/santini\" style=\"color:#F7931A\">Source Code</a>";
+    response += "<br><a href=\"https://twitter.com/WestworldSantini\" style=\"color:#F7931A\">Santini's Twitter</a>";
+    response += "<br><a href=\"https://www.elseif.cn/full.php\" style=\"color:#F7931A\">Santini's full log</a>";
     if (!santini.currentState) {
       Double diff = santini.getCurrentPrice() - santini.getOpenBuyBackPrice();
       diff = Math.round(diff * 1000.0) / 1000.0;
@@ -88,7 +92,7 @@ public class SantiniController {
     response += "<br><br>--- Donate ---<br>";
     response +=
         "<a href=\"https://www.blockchain.com/btc/address/"
-            + "14Xqn75eLQVZEgjFgrQzF8C2PxNDf894yj\">14Xqn75eLQVZEgjFgrQzF8C2PxNDf894yj</a>";
+            + "14Xqn75eLQVZEgjFgrQzF8C2PxNDf894yj\" style=\"color:#F7931A\">14Xqn75eLQVZEgjFgrQzF8C2PxNDf894yj</a>";
     return new ResponseEntity<>(
         "<html>\n"
             + "<head>\n"
