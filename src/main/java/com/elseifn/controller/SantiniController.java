@@ -64,14 +64,15 @@ public class SantiniController {
     if (Santini.DEVELOPMENT_MODE) response += "<br>### DEVELOPMENT MODE ###";
     response += "<br>--- Status report ---";
     response += "<br>Status: " + santini.getCurrentStateString();
+    response += "<br>Investment: " + santini.getInitialInvestment() + " BTC";
+    response += "<br>Portfolio  ≈ " + santini.getCurrentBalance() + " BTC";
+    response += santini.getBalances();
     response += "<br>Profit: " + santini.getCurrentProfit() + "%";
-    response += "<br>Portfolio value: " + santini.getCurrentBalance() + " BTC";
-    response += "<br>Initial investment: " + santini.getInitialInvestment() + " BTC";
-    response += "<br>Sell confidence: " + santini.getCurrentSellConfidence() + "%";
-    response += "<br><br>--- Prices ---";
+    response += "<br><br>--- Market ---";
     response += "<br>BTC Price: $" + santini.getCurrentPrice();
     response += "<br>Target: $" + santini.getCurrentTargetPrice();
     response += "<br>Buy back: $" + santini.getCurrentBuyBackPrice();
+    response += "<br>Sell confidence: " + santini.getCurrentSellConfidence() + "%";
     if (!santini.currentState) {
       Double diff = santini.getCurrentPrice() - santini.getOpenBuyBackPrice();
       diff = Math.round(diff * 1000.0) / 1000.0;
@@ -104,7 +105,7 @@ public class SantiniController {
             + "<link rel=\"mask-icon\" href=\"https://www.elseif.cn/safari-pinned-tab.svg\" color=\"#5bbad5\">\n"
             + "<meta name=\"msapplication-TileColor\" content=\"#da532c\">\n"
             + "<meta name=\"theme-color\" content=\"#ffffff\">\n"
-            + "<meta http-equiv=\"refresh\" content=\"30\" />"
+            + "<meta http-equiv=\"refresh\" content=\"25\" />"
             + "</head>\n"
             + "<title>Santini</title>\n"
             + "<body bgcolor=\"#000000\">\n"
