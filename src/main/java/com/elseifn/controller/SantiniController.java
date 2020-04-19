@@ -60,7 +60,15 @@ public class SantiniController {
   @GetMapping(path = PATH_STATUS)
   public ResponseEntity getState() {
     logger.trace(PATH_STATUS + RESPONSE_SUFFIX);
-    String response = "=====  >>>>>  SANTINI (v" + santini.getVersion() + ") <<<<<  =====<br>";
+    String response =
+        "██╗&nbsp;&nbsp;&nbsp;&nbsp;██╗██╗&nbsp;&nbsp;&nbsp;██╗&nbsp;█████╗&nbsp;████████╗████████╗\n"
+            + "<br>██║&nbsp;&nbsp;&nbsp;&nbsp;██║╚██╗&nbsp;██╔╝██╔══██╗╚══██╔══╝╚══██╔══╝\n"
+            + "<br>██║&nbsp;█╗&nbsp;██║&nbsp;╚████╔╝&nbsp;███████║&nbsp;&nbsp;&nbsp;██║&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;██║&nbsp;&nbsp;&nbsp;\n"
+            + "<br>██║███╗██║&nbsp;&nbsp;╚██╔╝&nbsp;&nbsp;██╔══██║&nbsp;&nbsp;&nbsp;██║&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;██║&nbsp;&nbsp;&nbsp;\n"
+            + "<br>╚███╔███╔╝&nbsp;&nbsp;&nbsp;██║&nbsp;&nbsp;&nbsp;██║&nbsp;&nbsp;██║&nbsp;&nbsp;&nbsp;██║&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;██║&nbsp;&nbsp;&nbsp;\n"
+            + "<br>&nbsp;╚══╝╚══╝&nbsp;&nbsp;&nbsp;&nbsp;╚═╝&nbsp;&nbsp;&nbsp;╚═╝&nbsp;&nbsp;╚═╝&nbsp;&nbsp;&nbsp;╚═╝&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;╚═╝&nbsp;(v"
+            + santini.getVersion()
+            + ")";
     if (Santini.DEVELOPMENT_MODE) response += "<br>### DEVELOPMENT MODE ###";
     response += "<br>--- Status report ---";
     response += "<br>Status: " + santini.getCurrentStateString();
@@ -85,9 +93,9 @@ public class SantiniController {
     response +=
         "<br><a href=\"https://github.com/elseifn/santini\" style=\"color:#F7931A\">Source Code</a>";
     response +=
-        "<br><a href=\"https://twitter.com/WestworldSantini\" style=\"color:#F7931A\">Santini's Twitter</a>";
+        "<br><a href=\"https://twitter.com/WestworldSantini\" style=\"color:#F7931A\">Twitter</a>";
     response +=
-        "<br><a href=\"https://www.elseif.cn/full.php\" style=\"color:#F7931A\">Santini's full log</a>";
+        "<br><a href=\"https://www.elseif.cn/full.php\" style=\"color:#F7931A\">Full log</a>";
     response += "<br><br>--- Donate ---";
     response +=
         "<br>Personal: <a href=\"https://www.blockchain.com/btc/address/"
