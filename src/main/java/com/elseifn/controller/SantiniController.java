@@ -59,6 +59,13 @@ public class SantiniController {
 
   @GetMapping(path = PATH_STATUS)
   public ResponseEntity getState() {
+    Double currentPrice = santini.getCurrentPrice();
+    Double initialInvestment = santini.getInitialInvestment();
+    Double currentBalance = Double.valueOf(santini.getCurrentBalance());
+    Double balanceDiff = currentBalance - initialInvestment;
+    Double balanceDiffUSD = balanceDiff * currentPrice;
+    balanceDiff = Math.round(balanceDiff * 10000000.0) / 10000000.0;
+    balanceDiffUSD = Math.round(balanceDiffUSD * 100.0) / 100.0;
     logger.trace(PATH_STATUS + RESPONSE_SUFFIX);
     String response =
         "`Mb(&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;db&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;)d'<br>"
@@ -72,27 +79,43 @@ public class SantiniController {
             + "&nbsp;&nbsp;&nbsp;&nbsp;`MM'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`MM'&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YMP&nbsp;&nbsp;&nbsp;&nbsp;MM.&nbsp;&nbsp;,MM&nbsp;YM.&nbsp;&nbsp;,&nbsp;YM.&nbsp;&nbsp;,<br>"
             + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;M&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`YMMM9'Yb.YMMM9&nbsp;&nbsp;YMMM9<br>"
             + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d'<br>"
-            + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(8),P&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(v"+ santini.getVersion()+ ")<br>"
+            + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(8),P&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;(v"
+            + santini.getVersion()
+            + ")<br>"
             + "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;YMM<br>";
     if (Santini.DEVELOPMENT_MODE) response += "<br>### DEVELOPMENT MODE ###";
     response += "<br>--- Status report ---";
     response += "<br>Status: " + santini.getCurrentStateString();
-    response += "<br>Investment: " + santini.getInitialInvestment() + " BTC";
-    response += "<br>Portfolio  ≈ " + santini.getCurrentBalance() + " BTC";
+    response += "<br>Investment: " + initialInvestment + " BTC";
+    response += "<br>Portfolio  ≈ " + currentBalance + " BTC";
     response += santini.getBalances();
-    response += "<br>Profit: " + santini.getCurrentProfit() + "%";
+    response +=
+        "<br>Profit: "
+            + santini.getCurrentProfit()
+            + "% ("
+            + String.format("%.7f", balanceDiff)
+            + " BTC | $"
+            + String.format("%.2f", balanceDiffUSD)
+            + ")";
     response += "<br><br>--- Market ---";
-    response += "<br>BTC Price: $" + santini.getCurrentPrice();
-    response += "<br>Target: $" + santini.getCurrentTargetPrice();
-    response += "<br>Buy back: $" + santini.getCurrentBuyBackPrice();
+    response += "<br>BTC Price: $" + String.format("%.2f", currentPrice);
+    response += "<br>Target: $" + String.format("%.2f", santini.getCurrentTargetPrice());
+    response += "<br>Buy back: $" + String.format("%.2f", santini.getCurrentBuyBackPrice());
     response += "<br>Sell confidence: " + santini.getCurrentSellConfidence() + "%";
     if (!santini.currentState) {
       Double diff = santini.getCurrentPrice() - santini.getOpenBuyBackPrice();
-      diff = Math.round(diff * 1000.0) / 1000.0;
       response += "<br><br>--- Open buy back ---";
       response +=
-          "<br>Amount: " + santini.getOpenBuyBackAmt() + " BTC @ $" + santini.getOpenBuyBackPrice();
-      response += "<br>Difference: $" + diff + " (" + santini.getOpenBuyBackPercentage() + "%)";
+          "<br>Amount: "
+              + santini.getOpenBuyBackAmt()
+              + " BTC @ $"
+              + String.format("%.2f", santini.getOpenBuyBackPrice());
+      response +=
+          "<br>Difference: $"
+              + String.format("%.2f", diff)
+              + " ("
+              + santini.getOpenBuyBackPercentage()
+              + "%)";
     }
     response += "<br><br>--- Links ---";
     response +=
