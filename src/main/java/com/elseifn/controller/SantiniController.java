@@ -62,6 +62,7 @@ public class SantiniController {
     Double currentPrice = santini.getCurrentPrice();
     Double initialInvestment = santini.getInitialInvestment();
     Double currentBalance = Double.valueOf(santini.getCurrentBalance());
+    Double portfolioValue = currentBalance * currentPrice;
     Double balanceDiff = currentBalance - initialInvestment;
     Double balanceDiffUSD = balanceDiff * currentPrice;
     balanceDiff = Math.round(balanceDiff * 100000000.0) / 100000000.0;
@@ -87,7 +88,7 @@ public class SantiniController {
     response += "<br>--- Status report ---";
     response += "<br>Status: " + santini.getCurrentStateString();
     response += "<br>Investment: " + initialInvestment + " BTC";
-    response += "<br>Portfolio  ≈ " + currentBalance + " BTC";
+    response += "<br>Portfolio  ≈ " + currentBalance + " BTC ($" + String.format("%.2f",portfolioValue) + ")";
     response += santini.getBalances();
     response +=
         "<br>Profit: "
