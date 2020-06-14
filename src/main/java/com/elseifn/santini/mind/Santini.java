@@ -42,6 +42,7 @@ public class Santini {
   };
   private static final String[] tickers = {BTCUSDT_TICKER};
   public boolean currentState = true;
+  private boolean EXECUTE_TWEETS = false;
   private String VERSION = SantiniApplication.getVersion();
   private Double lastTargetPrice = 1000000.0;
   private Double lastBuyBackPrice = 0.0;
@@ -141,6 +142,16 @@ public class Santini {
     return openBuyBackAmt;
   }
 
+  /**
+   * Returns if the bot currently has Twitter credentials set
+   *
+   * @return
+   */
+  public boolean isEXECUTE_TWEETS() {
+    return EXECUTE_TWEETS;
+  }
+
+
   public String getBalances() {
     String response = "";
     Account account = client.getAccount();
@@ -205,6 +216,8 @@ public class Santini {
     this.consumerSecret = consumerSecret;
     this.accessToken = accessToken;
     this.accessTokenSecret = accessTokenSecret;
+    EXECUTE_TWEETS = true;
+    logger.trace("EXECUTE_TWEETS: " + EXECUTE_TWEETS);
   }
 
   /**
@@ -540,9 +553,13 @@ public class Santini {
     // Tweets can only be 280 characters long error if longer
     if (message.length() <= 280) {
       try {
-        twitter.updateStatus(message);
-        // My bad I was sending a tweet
-        logger.trace("Sent tweet to @WestworldSantini");
+        if (EXECUTE_TWEETS) {
+          twitter.updateStatus(message);
+          // My bad I was sending a tweet
+          logger.trace("Sent tweet to @WestworldSantini");
+        } else {
+          logger.trace("No Twitter credentials have been set, not tweeting.");
+        }
       } catch (TwitterException e) {
         logger.error("ERROR SENDING TWEET: Reason: {}", e);
       }
