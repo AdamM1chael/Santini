@@ -10,7 +10,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class SantiniApplication {
   private static final Logger logger = Logger.getLogger(SantiniApplication.class);
-  private static final String VERSION = "6.8.3";
 
   public static void main(String[] args) {
     ConfigurableApplicationContext context = SpringApplication.run(SantiniApplication.class, args);
@@ -30,12 +29,8 @@ public class SantiniApplication {
       logger.error("Incorrect number of arguments given!");
       System.exit(-1);
     }
-    logger.info("Starting SANTINI (v" + VERSION + ") ...");
+    logger.info("Starting SANTINI...");
     runSantini(dolores);
-  }
-
-  public static String getVersion() {
-    return VERSION;
   }
 
   private static void runSantini(Santini dolores) {
