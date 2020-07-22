@@ -1,7 +1,6 @@
 package com.elseifn.controller;
 
 import com.google.common.hash.Hashing;
-import com.google.gson.Gson;
 import com.elseifn.santini.mind.Santini;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
