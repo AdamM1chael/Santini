@@ -10,6 +10,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class SantiniApplication {
   private static final Logger logger = Logger.getLogger(SantiniApplication.class);
+
   public static void main(String[] args) {
     ConfigurableApplicationContext context = SpringApplication.run(SantiniApplication.class, args);
     Santini dolores = context.getBean(Santini.class);
@@ -34,7 +35,6 @@ public class SantiniApplication {
   }
 
   private static void runSantini(Santini dolores) {
-    dolores.setVersion();
     for (; ; ) {
       dolores.gatherMindData();
       dolores.predictAndTrade();
