@@ -79,10 +79,8 @@ public class SantiniController {
             + "....`MM'.....`MM'........YMP....MM...,MM.YM...,.YM...,<br>"
             + ".....YP.......YP..........M.....`YMMM9'Yb.YMMM9..YMMM9<br>"
             + ".........................d'...........................<br>"
-            + ".....................(8),P......(v"
-            + santini.getVersion()
-            + ")..............<br>"
-            + "......................YMM.............................<br>";
+            + ".....................(8),P............................<br>"
+            + "......................YMM....................." + santini.getVersion() + "<br>";
 
     if (Santini.DEVELOPMENT_MODE) response += "<br>### DEVELOPMENT MODE ###";
     response += "<br>--- Status report ---";
