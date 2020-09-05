@@ -58,6 +58,7 @@ public class SantiniController {
 
   @GetMapping(path = PATH_STATUS)
   public ResponseEntity getState() {
+    logger.trace("*** ENTERING getState() ...");
     Double currentPrice = santini.getCurrentPrice();
     Double initialInvestment = santini.getInitialInvestment();
     Double currentBalance = Double.valueOf(santini.getCurrentBalance());
@@ -142,6 +143,7 @@ public class SantiniController {
     response +=
         "<br>Santini: <a href=\"https://www.blockchain.com/btc/address/"
             + "1BWu4LtW1swREcDWffFHZSuK3VTT1iWuba\" style=\"color:#F7931A\">1BW...uba</a>";
+    logger.trace("*** EXITING getState() ...");
     return new ResponseEntity<>(
         "<html>"
             + "<head>"
