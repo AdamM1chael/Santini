@@ -58,7 +58,7 @@ public class SantiniController {
 
   @GetMapping(path = PATH_STATUS)
   public ResponseEntity getState() {
-    long startTime = System.nanoTime();
+    Double startTime = (double)System.nanoTime();
     Double currentPrice = santini.getCurrentPrice();
     Double initialInvestment = santini.getInitialInvestment();
     Double currentBalance = Double.valueOf(santini.getCurrentBalance());
@@ -142,8 +142,8 @@ public class SantiniController {
     response +=
         "<br>Santini: <a href=\"https://www.blockchain.com/btc/address/"
             + "1BWu4LtW1swREcDWffFHZSuK3VTT1iWuba\" style=\"color:#F7931A\">1BW...uba</a>";
-    long duration = (System.nanoTime() - startTime);
-    logger.debug("Execution of /status endpoint took " + duration/1000000000 + " seconds");
+    Double duration = (System.nanoTime() - startTime);
+    logger.debug("Execution of /status endpoint took " + String.format("%.5f", duration/1000000000) + " seconds");
     return new ResponseEntity<>(
         "<html>"
             + "<head>"
