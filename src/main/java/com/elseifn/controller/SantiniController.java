@@ -62,7 +62,7 @@ public class SantiniController {
 
   @GetMapping(path = PATH_STATUS)
   public ResponseEntity getState() {
-    Double startTime = (double)System.nanoTime();
+    Double startTime = (double) System.nanoTime();
     Double currentPrice = santini.getCurrentPrice();
     Double initialInvestment = santini.getInitialInvestment();
     Double currentBalance = Double.valueOf(santini.getCurrentBalance());
@@ -146,9 +146,8 @@ public class SantiniController {
     response +=
         "<br>Santini: <a href=\"https://www.blockchain.com/btc/address/"
             + "1BWu4LtW1swREcDWffFHZSuK3VTT1iWuba\" style=\"color:#F7931A\">1BW...uba</a>";
-    Double duration = (System.nanoTime() - startTime)/1000000000;
-    queue.add(duration);
-    response += "<br><br><m>" + String.format("%.5f", getAverageStatusLoadTime()) + "</m>";
+    queue.add((System.nanoTime() - startTime) / 1000000000);
+    response += "<br><br><m>" + String.format("%.4f", getAverageStatusLoadTime()) + "s</m>";
     return new ResponseEntity<>(
         "<html>"
             + "<head>"
@@ -206,13 +205,17 @@ public class SantiniController {
         HttpStatus.OK);
   }
 
+  /**
+   * Returns the average of the queue
+   *
+   * @return Double average
+   */
   private Double getAverageStatusLoadTime() {
     if (queue.size() == 0) {
       return null;
     }
-    logger.debug("QUEUE SIZE: " + queue.size());
     Double average = 0.0;
-    for(Double num : queue) {
+    for (Double num : queue) {
       average += num / queue.size();
     }
     return average;
