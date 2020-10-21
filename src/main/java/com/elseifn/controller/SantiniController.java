@@ -30,7 +30,7 @@ public class SantiniController {
   @Autowired
   public SantiniController(Santini santini) {
     this.santini = santini;
-    queue = EvictingQueue.create(100);
+    queue = EvictingQueue.create(1000);
   }
 
   @GetMapping(path = PATH_BALANCE)
