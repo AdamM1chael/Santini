@@ -135,8 +135,6 @@ public class SantiniController {
     response +=
         "<br><a href=\"https://twitter.com/WestworldSantini\" style=\"color:#F7931A\">Twitter</a>";
     response +=
-        "<br><a href=\"https://www.elseif.cn/full.php\" style=\"color:#F7931A\">Full log</a>";
-    response +=
         "<br><a href=\"http://www.elseif.cn:17071/orders\" style=\"color:#F7931A\">Order History</a>";
     response += "<br><br>--- Donate ---";
     response +=
