@@ -30,7 +30,7 @@ public class SantiniApplication {
       logger.error("Incorrect number of arguments given!");
       System.exit(-1);
     }
-    logger.info("Starting SANTINI...");
+    logger.info("Starting Santini_v" + dolores.getVersion() + "...");
     runSantini(dolores);
   }
 
