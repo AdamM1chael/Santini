@@ -69,101 +69,81 @@ public class SantiniController {
     Double portfolioValue = currentBalance * currentPrice;
     double balanceDiff = CalcUtils.roundTo(currentBalance - initialInvestment, 8);
     double balanceDiffUSD = CalcUtils.roundTo(balanceDiff * currentPrice, 2);
-    String response =
-        "M\"\"MMM\"\"MMM\"\"M&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dP<br>M&nbsp;&nbsp;MMM&nbsp;&nbsp;MMM&nbsp;&nbsp;M&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;88&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;88<br>M&nbsp;&nbsp;MMP&nbsp;&nbsp;MMP&nbsp;&nbsp;M&nbsp;dP&nbsp;&nbsp;&nbsp;&nbsp;dP&nbsp;.d8888b.&nbsp;d8888P&nbsp;d8888P<br>M&nbsp;&nbsp;MM'&nbsp;&nbsp;MM'&nbsp;.M&nbsp;88&nbsp;&nbsp;&nbsp;&nbsp;88&nbsp;88'&nbsp;&nbsp;`88&nbsp;&nbsp;&nbsp;88&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;88<br>M&nbsp;&nbsp;`'&nbsp;.&nbsp;''&nbsp;.MM&nbsp;88.&nbsp;&nbsp;.88&nbsp;88.&nbsp;&nbsp;.88&nbsp;&nbsp;&nbsp;88&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;88<br>M&nbsp;&nbsp;&nbsp;&nbsp;.d&nbsp;&nbsp;.dMMM&nbsp;`8888P88&nbsp;`88888P8&nbsp;&nbsp;&nbsp;dP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dP<br>MMMMMMMMMMMMMM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.88<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d8888P<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-    response += "<m>Version&nbsp;" + santini.getVersion() + "</m><br>";
+    StringBuilder response =
+        new StringBuilder(
+            "M\"\"MMM\"\"MMM\"\"M&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dP<br>M&nbsp;&nbsp;MMM&nbsp;&nbsp;MMM&nbsp;&nbsp;M&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;88&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;88<br>M&nbsp;&nbsp;MMP&nbsp;&nbsp;MMP&nbsp;&nbsp;M&nbsp;dP&nbsp;&nbsp;&nbsp;&nbsp;dP&nbsp;.d8888b.&nbsp;d8888P&nbsp;d8888P<br>M&nbsp;&nbsp;MM'&nbsp;&nbsp;MM'&nbsp;.M&nbsp;88&nbsp;&nbsp;&nbsp;&nbsp;88&nbsp;88'&nbsp;&nbsp;`88&nbsp;&nbsp;&nbsp;88&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;88<br>M&nbsp;&nbsp;`'&nbsp;.&nbsp;''&nbsp;.MM&nbsp;88.&nbsp;&nbsp;.88&nbsp;88.&nbsp;&nbsp;.88&nbsp;&nbsp;&nbsp;88&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;88<br>M&nbsp;&nbsp;&nbsp;&nbsp;.d&nbsp;&nbsp;.dMMM&nbsp;`8888P88&nbsp;`88888P8&nbsp;&nbsp;&nbsp;dP&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;dP<br>MMMMMMMMMMMMMM&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;.88<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;d8888P<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;");
+    response.append("<m>Version&nbsp;").append(santini.getVersion()).append("</m><br>");
     if (Santini.DEVELOPMENT_MODE) {
-      response += "<br>### DEVELOPMENT MODE ###";
+      response.append("<br>### DEVELOPMENT MODE ###");
     }
-    response += "<br>--- Status report ---";
-    response += "<br>Status: " + santini.getCurrentStateString();
-    response += "<br>Investment: " + initialInvestment + " BTC";
-    response +=
-        "<br>Portfolio  ≈ "
-            + currentBalance
-            + " BTC ($"
-            + String.format("%.2f", portfolioValue)
-            + ")";
-    response += santini.getBalances();
-    response +=
-        "<br>Profit: "
-            + santini.getCurrentProfit()
-            + "% ("
-            + String.format("%.8f", balanceDiff)
-            + " BTC ≈ $"
-            + String.format("%.2f", balanceDiffUSD)
-            + ")";
+    response.append("<br>--- Status report ---");
+    response.append("<br>Status: ").append(santini.getCurrentStateString());
+    response.append("<br>Investment: ").append(initialInvestment).append(" BTC");
+    response
+        .append("<br>Portfolio  ≈ ")
+        .append(currentBalance)
+        .append(" BTC ($")
+        .append(String.format("%.2f", portfolioValue))
+        .append(")");
+    response.append(santini.getBalances());
+    response
+        .append("<br>Profit: ")
+        .append(santini.getCurrentProfit())
+        .append("% (")
+        .append(String.format("%.8f", balanceDiff))
+        .append(" BTC ≈ $")
+        .append(String.format("%.2f", balanceDiffUSD))
+        .append(")");
     if (!santini.isEXECUTE_TWEETS()) {
-      response += "<br>Tweeting: DISABLED";
+      response.append("<br>Tweeting: DISABLED");
     }
-    response += "<br><br>--- Market ---";
-    response += "<br>BTC Price: $" + String.format("%.2f", currentPrice);
-    response += "<br>Target: $" + String.format("%.2f", santini.getCurrentTargetPrice());
-    response += "<br>Buy back: $" + String.format("%.2f", santini.getCurrentBuyBackPrice());
-    response += "<br>Sell confidence: " + santini.getCurrentSellConfidence() + "%";
+    response.append("<br><br>--- Market ---");
+    response.append("<br>BTC Price: $").append(String.format("%.2f", currentPrice));
+    response.append("<br>Target: $").append(String.format("%.2f", santini.getCurrentTargetPrice()));
+    response
+        .append("<br>Buy back: $")
+        .append(String.format("%.2f", santini.getCurrentBuyBackPrice()));
+    response.append("<br>Sell confidence: ").append(santini.getCurrentSellConfidence()).append("%");
     if (!santini.currentState) {
       Double diff = santini.getCurrentPrice() - santini.getOpenBuyBackPrice();
-      response += "<br><br>--- Open buy back ---";
-      response +=
-          "<br>Amount: "
-              + santini.getOpenBuyBackAmt()
-              + " BTC @ $"
-              + String.format("%.2f", santini.getOpenBuyBackPrice());
-      response +=
-          "<br>Difference: $"
-              + String.format("%.2f", diff)
-              + " ("
-              + santini.getOpenBuyBackPercentage()
-              + "%)";
+      response.append("<br><br>--- Open buy back ---");
+      response
+          .append("<br>Amount: ")
+          .append(santini.getOpenBuyBackAmt())
+          .append(" BTC @ $")
+          .append(String.format("%.2f", santini.getOpenBuyBackPrice()));
+      response
+          .append("<br>Difference: $")
+          .append(String.format("%.2f", diff))
+          .append(" (")
+          .append(santini.getOpenBuyBackPercentage())
+          .append("%)");
     }
-    response += "<br><br>--- Links ---";
-    response +=
-        "<br><a href=\"https://github.com/elseifn/santini\" style=\"color:#F7931A\">Source Code</a>";
-    response +=
-        "<br><a href=\"https://twitter.com/WestworldSantini\" style=\"color:#F7931A\">Twitter</a>";
-    response +=
-        "<br><a href=\"http://www.elseif.cn:17071/orders\" style=\"color:#F7931A\">Order History</a>";
-    response += "<br><br>--- Donate ---";
-    response +=
+    response.append("<br><br>--- Links ---");
+    response.append(
+        "<br><a href=\"https://github.com/elseifn/santini\" style=\"color:#F7931A\">Source Code</a>");
+    response.append(
+        "<br><a href=\"https://twitter.com/WestworldSantini\" style=\"color:#F7931A\">Twitter</a>");
+    response.append(
+        "<br><a href=\"http://www.elseif.cn:17071/orders\" style=\"color:#F7931A\">Order History</a>");
+    response.append("<br><br>--- Donate ---");
+    response.append(
         "<br>Personal: <a href=\"https://www.blockchain.com/btc/address/"
-            + "14Xqn75eLQVZEgjFgrQzF8C2PxNDf894yj\" style=\"color:#F7931A\">14X...4yj</a>";
-    response +=
+            + "14Xqn75eLQVZEgjFgrQzF8C2PxNDf894yj\" style=\"color:#F7931A\">14X...4yj</a>");
+    response.append(
         "<br>Santini: <a href=\"https://www.blockchain.com/btc/address/"
-            + "1BWu4LtW1swREcDWffFHZSuK3VTT1iWuba\" style=\"color:#F7931A\">1BW...uba</a>";
+            + "1BWu4LtW1swREcDWffFHZSuK3VTT1iWuba\" style=\"color:#F7931A\">1BW...uba</a>");
     queue.add((System.nanoTime() - startTime) / 1000000000);
-    response +=
-        "<g><br><br>Avg load time: " + String.format("%.4f", getAverageStatusLoadTime()) + "s";
-    response += "<br>Uptime: " + CalcUtils.getUpTimeString() + "</g>";
+    response
+        .append("<g><br><br>Avg load time: ")
+        .append(String.format("%.4f", getAverageStatusLoadTime()))
+        .append("s");
+    response.append("<br>Uptime: ").append(CalcUtils.getUpTimeString()).append("</g>");
     return new ResponseEntity<>(
-        "<html>"
-            + "<head>"
-            + "<link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"https://www.elseif.cn/apple-touch-icon.png\">"
-            + "<link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"https://www.elseif.cn/favicon-32x32.png\">"
-            + "<link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"https://www.elseif.cn/favicon-16x16.png\">"
-            + "<link rel=\"manifest\" href=\"https://www.elseif.cn/site.webmanifest\">"
-            + "<link rel=\"mask-icon\" href=\"https://www.elseif.cn/safari-pinned-tab.svg\" color=\"#5bbad5\">"
-            + "<meta name=\"msapplication-TileColor\" content=\"#da532c\">"
-            + "<meta name=\"theme-color\" content=\"#ffffff\">"
-            + "<meta http-equiv=\"refresh\" content=\"25\" />"
-            + "<style>"
-            + "body {"
-            + "  color: #F7931A;"
-            + "}"
-            + "m {"
-            + "  color: #A9A9A9;"
-            + "}"
-            + "g {"
-            + "  color: #999999;"
-            + "}"
-            + "</style>"
-            + "</head>"
-            + "<title>Santini</title>"
-            + "<body bgcolor=\"#000000\">"
-            + "<font face=\"Courier\" size=\"3\">"
-            + response
-            + "</font>"
-            + "</body>"
-            + "</html>",
+        new StringBuilder(
+                "<html><head><link rel=\"apple-touch-icon\" sizes=\"180x180\" href=\"https://www.elseif.cn/apple-touch-icon.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"32x32\" href=\"https://www.elseif.cn/favicon-32x32.png\"><link rel=\"icon\" type=\"image/png\" sizes=\"16x16\" href=\"https://www.elseif.cn/favicon-16x16.png\"><link rel=\"manifest\" href=\"https://www.elseif.cn/site.webmanifest\"><link rel=\"mask-icon\" href=\"https://www.elseif.cn/safari-pinned-tab.svg\" color=\"#5bbad5\"><meta name=\"msapplication-TileColor\" content=\"#da532c\"><meta name=\"theme-color\" content=\"#ffffff\"><meta http-equiv=\"refresh\" content=\"25\" /><style>body {  color: #F7931A;}m {  color: #A9A9A9;}g {  color: #999999;}</style></head><title>Santini</title><body bgcolor=\"#000000\"><font face=\"Courier\" size=\"3\">")
+            .append(response)
+            .append("</font></body></html>"),
         HttpStatus.OK);
   }
 
