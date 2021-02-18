@@ -6,6 +6,7 @@ import com.elseifn.santini.mind.Santini;
 import com.elseifn.santini.utils.CalcUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.devtools.restart.Restarter;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,11 @@ public class SantiniController {
   @Autowired
   public SantiniController(Santini santini) {
     this.santini = santini;
+  }
+
+  @GetMapping(path = "/restart")
+  public void restart() {
+    Restarter.getInstance().restart();
   }
 
   @GetMapping(path = PATH_BALANCE)
