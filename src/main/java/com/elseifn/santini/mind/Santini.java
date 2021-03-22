@@ -54,10 +54,8 @@ public class Santini {
 
   @Value("${initialInvestment}")
   private Double INITIAL_INVESTMENT;
-
   @Value("${versionValue}")
   private String VERSION;
-
   @Value("${developmentMode}")
   public void setDevelopmentMode(boolean mode) {
     DEVELOPMENT_MODE = mode;
@@ -363,8 +361,7 @@ public class Santini {
             CalcUtils.roundTo((currentPrice - Double.valueOf(openOrder.getPrice())), 2);
         logger.trace(
             "Current buy back: " + currentMarginPercent + "% ($" + buyBackDifference + ")");
-        if (currentMarginPercent > 10.0
-            || (System.currentTimeMillis() - openOrder.getTime()) > 432000000) {
+        if (currentMarginPercent > 10.0) {
           logger.trace("Deciding to submit a market buy back at $" + currentPrice);
           if (!DEVELOPMENT_MODE) {
             executeMarketBuyBack();
