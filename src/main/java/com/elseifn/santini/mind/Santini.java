@@ -52,11 +52,8 @@ public class Santini {
   private String accessToken;
   private String accessTokenSecret;
 
-  @Value("${initialBTC}")
-  private Double INITIAL_BTC;
-
-  @Value("${initialUSD}")
-  private Double INITIAL_USD;
+  @Value("${initialInvestment}")
+  private Double INITIAL_INVESTMENT;
 
   @Value("${versionValue}")
   private String VERSION;
@@ -106,21 +103,12 @@ public class Santini {
   }
 
   /**
-   * Returns the initial investment amount in BTC
+   * Returns the initial investment amount
    *
    * @return Amount that was initially invested
    */
-  public Double getInitialBTC() {
-    return INITIAL_BTC;
-  }
-
-  /**
-   * Returns the initial investment amount in USD
-   *
-   * @return Amount that was initially invested
-   */
-  public Double getInitialUSD() {
-    return INITIAL_USD;
+  public Double getInitialInvestment() {
+    return INITIAL_INVESTMENT;
   }
 
   /**
@@ -304,7 +292,7 @@ public class Santini {
   public String getCurrentProfit() {
     Double percentOnInvenstment =
         CalcUtils.roundTo(
-            (((Double.valueOf(getCurrentBalance()) / INITIAL_BTC) * 100) - 100), 3);
+            (((Double.valueOf(getCurrentBalance()) / INITIAL_INVESTMENT) * 100) - 100), 3);
     return percentOnInvenstment.toString();
   }
 
@@ -380,7 +368,7 @@ public class Santini {
             CalcUtils.roundTo((currentPrice - Double.valueOf(openOrder.getPrice())), 2);
         logger.trace(
             "Current buy back: " + currentMarginPercent + "% ($" + buyBackDifference + ")");
-        if (currentMarginPercent > 10.0
+        if (currentMarginPercent > 2.5
             || (System.currentTimeMillis() - openOrder.getTime()) > 432000000) {
           logger.trace("Deciding to submit a market buy back at $" + currentPrice);
           if (!DEVELOPMENT_MODE) {
