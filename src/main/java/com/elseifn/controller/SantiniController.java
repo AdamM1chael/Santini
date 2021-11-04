@@ -210,12 +210,12 @@ public class SantiniController {
   @GetMapping(path = PATH_PRICE_DATA)
   public ResponseEntity getPriceData() {
     PriceData priceData = new PriceData();
-    priceData.setBtc(8350.05);
-    priceData.setEth(162.55);
-    priceData.setDoge(0.00258587);
-    priceData.setGold(1572.85);
-    priceData.setSilver(18.054);
-    priceData.setPlatinum(1002.51);
+    priceData.setBtc(santini.getCurrentPrice());
+    priceData.setEth(santini.getCurrentPrice("ETHUSDT"));
+    priceData.setDoge(santini.getCurrentPrice("DOGE_USDT"));
+    priceData.setGold(1571.45);
+    priceData.setSilver(18.09);
+    priceData.setPlatinum(1005.0);
     return new ResponseEntity<>(priceData.toString(), HttpStatus.OK);
   }
 
