@@ -212,7 +212,7 @@ public class SantiniController {
     PriceData priceData = new PriceData();
     priceData.setBtc(santini.getCurrentPrice());
     priceData.setEth(santini.getCurrentPrice("ETHUSDT"));
-    priceData.setDoge(santini.getCurrentPrice("DOGE_USDT"));
+    priceData.setDoge(santini.getCurrentPrice("DOGEUSDT"));
     priceData.setGold(1571.45);
     priceData.setSilver(18.09);
     priceData.setPlatinum(1005.0);
